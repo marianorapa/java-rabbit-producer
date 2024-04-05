@@ -3,7 +3,7 @@ package com.example.demo.controller.dto;
 public class ProcessRequest {
 
     private String content;
-    private String severity;
+    private String topic;
 
     public ProcessRequest(String content) {
         this.content = content;
@@ -20,11 +20,11 @@ public class ProcessRequest {
         this.content = content;
     }
 
-    public String getSeverity() {
-        return severity;
+    public String getTopic() {
+        return topic;
     }
 
-    public void setSeverity(String severity) {
-        this.severity = severity;
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 }

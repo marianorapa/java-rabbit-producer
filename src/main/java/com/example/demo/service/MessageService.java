@@ -11,17 +11,17 @@ import java.util.concurrent.TimeoutException;
 
 @Service
 public class MessageService {
-    private final static String EXCHANGE_NAME = "logs-direct";
+    private final static String EXCHANGE_NAME = "logs-topic";
 
     @Value("${spring.rabbitmq.host}")
     private String rabbitHost;
 
-    public void sendMessage(String content, String severity) {
+    public void sendMessage(String content, String topic) {
         ConnectionFactory factory = getConnectionFactory();
         try (Connection connection = factory.newConnection();
              Channel channel = connection.createChannel()) {
-            channel.exchangeDeclare(EXCHANGE_NAME, "direct");
-            channel.basicPublish(EXCHANGE_NAME, severity, null, content.getBytes());
+            channel.exchangeDeclare(EXCHANGE_NAME, "topic");
+            channel.basicPublish(EXCHANGE_NAME, topic, null, content.getBytes());
             System.out.println(" [x] Sent '" + content + "'");
 
         } catch (IOException | TimeoutException e) {
