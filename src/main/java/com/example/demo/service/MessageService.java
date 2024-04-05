@@ -11,7 +11,7 @@ import java.util.concurrent.TimeoutException;
 
 @Service
 public class MessageService {
-    private final static String QUEUE_NAME = "hello";
+    private final static String EXCHANGE_NAME = "logs";
 
     @Value("${spring.rabbitmq.host}")
     private String rabbitHost;
@@ -20,8 +20,8 @@ public class MessageService {
         ConnectionFactory factory = getConnectionFactory();
         try (Connection connection = factory.newConnection();
              Channel channel = connection.createChannel()) {
-            channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-            channel.basicPublish("", QUEUE_NAME, null, content.getBytes());
+            channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
+            channel.basicPublish(EXCHANGE_NAME, "", null, content.getBytes());
             System.out.println(" [x] Sent '" + content + "'");
 
         } catch (IOException | TimeoutException e) {
