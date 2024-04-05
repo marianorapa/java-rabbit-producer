@@ -18,7 +18,7 @@ public class ProcessController {
 
     @PostMapping("/process")
     public ResponseEntity<ProcessResponse> process(@RequestBody ProcessRequest request) {
-        messageService.sendMessage(request.getContent());
+        messageService.sendMessage(request.getContent(), request.getSeverity());
         return new ResponseEntity<>(new ProcessResponse("Processing"), HttpStatus.OK);
     }
 
