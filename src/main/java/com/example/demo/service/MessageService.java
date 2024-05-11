@@ -16,6 +16,12 @@ public class MessageService {
     @Value("${spring.rabbitmq.host}")
     private String rabbitHost;
 
+    @Value("${spring.rabbitmq.user}")
+    private String rabbitUser;
+
+    @Value("${spring.rabbitmq.password}")
+    private String rabbitPassword;
+
     public void sendMessage(String content, String topic) {
         ConnectionFactory factory = getConnectionFactory();
         try (Connection connection = factory.newConnection();
@@ -32,6 +38,8 @@ public class MessageService {
     private ConnectionFactory getConnectionFactory() {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost(rabbitHost);
+        factory.setUsername(rabbitUser);
+        factory.setPassword(rabbitPassword);
         return factory;
     }
 
